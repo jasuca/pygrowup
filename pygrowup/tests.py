@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import os
 import csv
 import codecs
@@ -5,14 +7,15 @@ from decimal import Decimal as D
 
 import nose
 
-import pygrowup
+from . import pygrowup
+from six.moves import zip
 
 
 class WHOResult(object):
     def __init__(self, indicator, values):
         self.indicator = indicator
         columns = 'id,region,GENDER,agemons,WEIGHT,_HEIGHT,measure,oedema,HEAD,MUAC,TRI,SUB,SW,agedays,CLENHEI,CBMI,ZWEI,ZLEN,ZWFL,ZBMI,FWEI,FLEN,FWFL,FBMI'
-        data = zip(columns.split(','), values)
+        data = list(zip(columns.split(','), values))
         for k, v in data:
             setattr(self, k.lower(), v)
         self.age = self.agemons
@@ -65,12 +68,12 @@ def compare_result(who):
     if who.measurement:
         our_result = calc.zscore_for_measurement(who.indicator, who.measurement,
                                                  who.age, who.gender, who.height)
-        print "THEM: " + str(who.result)
+        print("THEM: " + str(who.result))
         if who.result not in ['', ' ', None]:
             if our_result is not None:
-                print "US  : " + str(our_result)
+                print("US  : " + str(our_result))
                 diff = calc.context.subtract(D(who.result), D(our_result))
-                print "DIFF: " + str(abs(diff))
+                print("DIFF: " + str(abs(diff)))
                 assert abs(diff) <= D('1')
 
 
@@ -82,7 +85,7 @@ def test_generator():
 
     reader = csv.reader(csvee, dialect="excel")
     # skip column labels
-    reader.next()
+    next(reader)
     for row in reader:
         for indicator in ["lhfa", "wfl", "wfh"]:
             who = WHOResult(indicator, row)

@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import re
 import datetime
 
@@ -113,5 +115,5 @@ def age_to_estimated_bday(age_in_months):
             return estimate
         else:
             return None
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)

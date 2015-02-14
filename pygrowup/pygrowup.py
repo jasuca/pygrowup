@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # vim: ai ts=4 sts=4 et sw=4
 from __future__ import with_statement
+from __future__ import absolute_import
+from __future__ import print_function
 
 import os
 import math
@@ -8,7 +10,8 @@ import decimal
 import logging
 from decimal import Decimal as D
 
-import exceptions
+from . import exceptions
+import six
 
 try:
     # Python 2.6 includes json library
@@ -311,7 +314,7 @@ class Calculator(object):
 
     def zscore_for_measurement(self, indicator, measurement, age_in_months, sex, height=None):
         assert sex is not None
-        assert isinstance(sex, basestring)
+        assert isinstance(sex, six.string_types)
         assert sex.upper() in ["M", "F"]
         assert age_in_months is not None
         assert indicator is not None
@@ -453,7 +456,7 @@ class Calculator(object):
                     return D(stdev)
 
                 if (zscore > D(3)):
-                    print "Z greater than 3"
+                    print("Z greater than 3")
                     # TODO measure performance of lookup vs calculation
                     # calculate for now so we have greater precision
 

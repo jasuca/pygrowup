@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #!/usr/bin/env python
 # vim: ai ts=4 sts=4 et sw=4
 import distribute_setup
@@ -26,7 +27,9 @@ setup(
     download_url="https://github.com/ewheeler/pygrowup/archive/0.7.7b0.tar.gz",
     classifiers=[
         'Intended Audience :: Healthcare Industry',
-        'Programming Language :: Python :: 2.5',
+        "Programming Language :: Python",
+        'Programming Language :: Python :: 2.7',
+        "Programming Language :: Python :: 3",
         'License :: OSI Approved :: BSD License',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Operating System :: MacOS :: MacOS X',
